@@ -1,16 +1,16 @@
 <?php require("./includes/head.php") ?>
+<?php
+	if ($_SERVER["REQUEST_METHOD"] == "POST" && !SignSys::checkLoggedIn()){
+		$fullname = $_POST["fullname"];
+		$email = $_POST["email"];
+		$password = $_POST["password"];
+		SignSys::register($fullname,$email,$password);
+		header("location:http://127.0.0.1:8000?success=true");
+	}
+	if(SignSys::checkLoggedIn())
+		die("You are already logged in.");
+?>
 <body>
-	<?php
-		if ($_SERVER["REQUEST_METHOD"] == "POST" && !SignSys::checkLoggedIn()){
-			$fullname = $_POST["fullname"];
-			$email = $_POST["email"];
-			$password = $_POST["password"];
-			SignSys::register($fullname,$email,$password);
-			header("location:http://127.0.0.1:8000?success=true");
-		}
-		if(SignSys::checkLoggedIn())
-			die("You are already logged in.");
-	?>
 	<h1 style="text-align:center">Signup</h1>
 	<form action="/signup.php" method="POST">
 		<input name="csrf" type="hidden" value="<?= $_SESSION['csrf']; ?>">

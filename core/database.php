@@ -159,7 +159,10 @@
 			try{
 				$fd_arr = [];
 				$fd_res = $this->conn->query($fdsql);
-				while( $fd_arr[] = (int)$fd_res->fetch_assoc()["added"] );
+				$res = $fd_res->fetch_all($mode= MYSQLI_ASSOC);
+				foreach($res as $item){
+					$fd_arr[] = $item["added"];
+				}
 				$fd_arr = array_filter($fd_arr); // remove null
 
 				$arr = [];

@@ -45,7 +45,8 @@
 			@$uid = $_COOKIE["uid"];
 			@$token = $_COOKIE["token"];
 			global $userdb;
-			$user = $userdb->getUserById($uid);
+			$user = $userdb->getUserById($uid) ?? [];
+			if(!isset($user["conftoken"])) return false;
 			if(isset($_SESSION["user"])){
 				return true;
 			}else if($token === $user["conftoken"] && isset($token)){
